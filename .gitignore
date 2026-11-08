@@ -1,0 +1,8 @@
+build/
+*.o
+*.dylib
+*.dSYM/
+.DS_Store
+*.mov
+*.png
+*.log
