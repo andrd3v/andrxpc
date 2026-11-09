@@ -3,7 +3,7 @@ CFLAGS = -Wall -O2 -arch arm64e
 LDFLAGS = -lSystem -framework Foundation -framework CoreFoundation
 OBJCFLAGS = $(CFLAGS) -fobjc-arc
 
-all: build/injector build/xpchook.dylib build/andrxpc
+all: build/injector build/xpchook.dylib build/axpc
 
 build:
 	mkdir -p build
@@ -15,7 +15,7 @@ build/xpchook.dylib: dylib/xpchook.m | build
 	$(CC) $(CFLAGS) -fno-objc-arc -shared -o $@ dylib/xpchook.m -framework CoreFoundation -lobjc
 	codesign -f -s - $@
 
-build/andrxpc: tui/main.c | build
+build/axpc: tui/main.c | build
 	$(CC) $(CFLAGS) -o $@ tui/main.c -lncurses
 
 clean:

@@ -9,7 +9,7 @@ import time
 TOOL_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(TOOL_DIR)
 BUILD_DIR = os.path.join(PROJECT_DIR, "build")
-LOG_DIRS = ["/tmp/andrxpc", "/Library/Apple/usr/lib/andrxpc_logs"]
+LOG_DIRS = ["/tmp/axpc", "/Library/Apple/usr/lib/axpc_logs"]
 
 
 def read_message():
@@ -274,7 +274,7 @@ def handle_request(msg):
     if method == "initialize":
         send_result(req_id, {
             "protocolVersion": "2024-11-05",
-            "serverInfo": {"name": "andrxpc", "version": "1.1.0"},
+            "serverInfo": {"name": "axpc", "version": "1.2.0"},
             "capabilities": {"tools": {}}
         })
     elif method == "notifications/initialized":

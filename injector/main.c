@@ -20,7 +20,7 @@ extern char **environ;
 
 static void usage(const char *prog)
 {
-    fprintf(stderr, "andrxpc injector\n\n");
+    fprintf(stderr, "axpc injector\n\n");
     fprintf(stderr, "usage:\n");
     fprintf(stderr, "  %s -p <pid> <dylib>          inject via dlopen\n", prog);
     fprintf(stderr, "  %s -n <name> <dylib>         inject via dlopen\n", prog);
@@ -128,10 +128,10 @@ static int shellCmd(const char *fmt, ...)
 
 static void ensureLogDirs(void)
 {
-    mkdir("/tmp/andrxpc", 0777);
-    chmod("/tmp/andrxpc", 01777);
-    mkdir("/Library/Apple/usr/lib/andrxpc_logs", 0777);
-    chmod("/Library/Apple/usr/lib/andrxpc_logs", 01777);
+    mkdir("/tmp/axpc", 0777);
+    chmod("/tmp/axpc", 01777);
+    mkdir("/Library/Apple/usr/lib/axpc_logs", 0777);
+    chmod("/Library/Apple/usr/lib/axpc_logs", 01777);
 }
 
 static const char *stageDylib(const char *path)

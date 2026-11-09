@@ -39,7 +39,7 @@ static void openLog(void)
     bzero(name, sizeof(name));
     proc_name(getpid(), name, sizeof(name));
 
-    const char *dirs[] = {"/tmp/andrxpc", "/Library/Apple/usr/lib/andrxpc_logs", NULL};
+    const char *dirs[] = {"/tmp/axpc", "/Library/Apple/usr/lib/axpc_logs", NULL};
     for (int i = 0; dirs[i]; i++)
     {
         mkdir(dirs[i], 0777);
@@ -55,7 +55,7 @@ static void openLog(void)
     }
 
     gUseSyslog = 1;
-    gOsLog = os_log_create("com.andrxpc.hook", "xpc");
+    gOsLog = os_log_create("com.axpc.hook", "xpc");
 }
 
 __attribute__((format(printf, 2, 3)))
@@ -415,7 +415,7 @@ static void swizzle(Class cls, SEL sel, IMP imp, IMP *orig)
 static int gInited = 0;
 
 __attribute__((constructor))
-static void andrxpcInit(void)
+static void axpcInit(void)
 {
     if (gInited) return;
     gInited = 1;
@@ -425,7 +425,7 @@ static void andrxpcInit(void)
     char name[256];
     bzero(name, sizeof(name));
     proc_name(getpid(), name, sizeof(name));
-    xlog("INIT", "andrxpc loaded into pid %d (%s)", getpid(), name);
+    xlog("INIT", "axpc loaded into pid %d (%s)", getpid(), name);
 
     const char *inserted = getenv("DYLD_INSERT_LIBRARIES");
     if (inserted && strstr(inserted, "xpchook"))

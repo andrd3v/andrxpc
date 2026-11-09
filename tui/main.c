@@ -20,8 +20,8 @@
 #include <fcntl.h>
 #include <mach-o/dyld.h>
 
-#define LOG_DIR "/tmp/andrxpc"
-#define LOG_DIR2 "/Library/Apple/usr/lib/andrxpc_logs"
+#define LOG_DIR "/tmp/axpc"
+#define LOG_DIR2 "/Library/Apple/usr/lib/axpc_logs"
 #define MAX_PROCS 1024
 #define MAX_LOGS 32768
 #define MAX_WATCH 128
@@ -361,7 +361,7 @@ static void startOsLogStream(App *app)
         dup2(pipefd[1], STDERR_FILENO);
         close(pipefd[1]);
         execlp("log", "log", "stream", "--style", "compact",
-               "--predicate", "subsystem == \"com.andrxpc.hook\"",
+               "--predicate", "subsystem == \"com.axpc.hook\"",
                NULL);
         _exit(127);
     }
@@ -389,7 +389,7 @@ static void readOsLogStream(App *app)
         char *nl = strchr(line, '\n');
         if (nl) *nl = '\0';
 
-        char *payload = strstr(line, "com.andrxpc.hook");
+        char *payload = strstr(line, "com.axpc.hook");
         if (!payload) continue;
         payload = strchr(payload, ']');
         if (!payload) continue;
@@ -437,7 +437,7 @@ static void readOsLogStream(App *app)
         {
             sscanf(pidStr + 1, "%d", &pid);
         }
-        char *procStart = strstr(line, "com.andrxpc.hook");
+        char *procStart = strstr(line, "com.axpc.hook");
         if (procStart)
         {
             char *bracket = strchr(line, '[');
@@ -614,7 +614,7 @@ static void drawTitle(void)
 {
     attron(COLOR_PAIR(C_TITLE) | A_BOLD);
     mvhline(0, 0, ' ', COLS);
-    mvprintw(0, 1, "andrxpc");
+    mvprintw(0, 1, "axpc");
     attroff(A_BOLD);
     mvprintw(0, COLS - 40, "tab:switch  enter:inject  /:filter  q:quit");
     attroff(COLOR_PAIR(C_TITLE));

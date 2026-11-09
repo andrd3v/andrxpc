@@ -1,14 +1,14 @@
-# xpc
+# axpc
 
 Universal XPC message interceptor for macOS. Hooks all IPC channels (XPC, NSXPC, Mach bootstrap, CFMessagePort, distributed notifications) in any process, including sandboxed daemons, with a real-time ncurses TUI.
 
-![andrxpc](screenshot.png)
+![axpc](screenshot.png)
 
 ## What it does
 
-- **xpchook.dylib** - intercepts XPC connections, messages, replies, bootstrap lookups, CFMessagePort calls, NSXPCConnection lifecycle, and NSDistributedNotificationCenter posts. Logs everything to `/tmp/andrxpc/` (or `/Library/Apple/usr/lib/andrxpc_logs/` for sandboxed processes, or os_log as a last resort).
+- **xpchook.dylib** - intercepts XPC connections, messages, replies, bootstrap lookups, CFMessagePort calls, NSXPCConnection lifecycle, and NSDistributedNotificationCenter posts. Logs everything to `/tmp/axpc/` (or `/Library/Apple/usr/lib/axpc_logs/` for sandboxed processes, or os_log as a last resort).
 - **injector** - injects the hook dylib into running processes using `processor_set_tasks` (PST) for task port acquisition and remote `dlopen` via a custom arm64e trampoline. Handles sandbox extensions, `__RESTRICT` binaries, and `checked-allocations` entitlement via ptrace fallback.
-- **andrxpc** (TUI) - ncurses interface that lists all processes, lets you inject into any of them, and shows intercepted XPC messages in real-time with color-coded tags.
+- **axpc** (TUI) - ncurses interface that lists all processes, lets you inject into any of them, and shows intercepted XPC messages in real-time with color-coded tags.
 
 ## Requirements
 
@@ -26,14 +26,14 @@ make
 Produces:
 - `build/xpchook.dylib` - the hook library (auto-codesigned with ad-hoc signature)
 - `build/injector` - the CLI injector
-- `build/andrxpc` - the TUI monitor
+- `build/axpc` - the TUI monitor
 
 If you want to codesign manually:
 
 ```bash
 codesign -f -s - build/xpchook.dylib
 codesign -f -s - build/injector
-codesign -f -s - build/andrxpc
+codesign -f -s - build/axpc
 ```
 
 ## Usage
@@ -41,7 +41,7 @@ codesign -f -s - build/andrxpc
 ### TUI (recommended)
 
 ```bash
-sudo build/andrxpc
+sudo build/axpc
 ```
 
 The TUI shows:
@@ -131,7 +131,7 @@ Tags: INIT, CONN, SEND, RECV, REPLY, BOOT, NSXPC, CFMP, DNOTE, EVENT
 
 ## MCP server
 
-andrxpc has an MCP server so AI assistants like Claude can read XPC logs, inject into processes, and monitor traffic directly.
+axpc has an MCP server so AI assistants like Claude can read XPC logs, inject into processes, and monitor traffic directly.
 
 ### Setup
 
@@ -140,15 +140,15 @@ Add to your Claude Code config (`~/.claude/settings.json`):
 ```json
 {
   "mcpServers": {
-    "andrxpc": {
+    "axpc": {
       "command": "python3",
-      "args": ["/path/to/andrxpc/mcp/server.py"]
+      "args": ["/path/to/axpc/mcp/server.py"]
     }
   }
 }
 ```
 
-Replace `/path/to/andrxpc` with the actual path. No dependencies needed, just python3.
+Replace `/path/to/axpc` with the actual path. No dependencies needed, just python3.
 
 ### Tools
 
