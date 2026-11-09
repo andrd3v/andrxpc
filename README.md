@@ -1,4 +1,4 @@
-# andrxpc
+# xpc
 
 Universal XPC message interceptor for macOS. Hooks all IPC channels (XPC, NSXPC, Mach bootstrap, CFMessagePort, distributed notifications) in any process, including sandboxed daemons, with a real-time ncurses TUI.
 
